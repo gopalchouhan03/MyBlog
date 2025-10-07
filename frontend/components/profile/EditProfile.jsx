@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+const API_BASE = import.meta.env.API_BASE;
 
 const EditProfile = ({ userId }) => {
   const [form, setForm] = useState({ fullName: "", bio: "", profileImage: "" });
 
   useEffect(() => {
     // Fetch existing user data
-    axios.get(`http://localhost:5000/api/users/${userId}`)
+    axios.get(`${API_BASE}/api/users/${userId}`)
       .then(res => setForm(res.data.data))
       .catch(err => console.error(err));
   }, [userId]);
@@ -17,7 +18,7 @@ const EditProfile = ({ userId }) => {
 
   const handleSave = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/users/${userId}/edit`, form);
+      await axios.put(`${API_BASE}/api/users/${userId}/edit`, form);
       alert("Profile updated ✅");
     } catch (error) {
       console.error(error);

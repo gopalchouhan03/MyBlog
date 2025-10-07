@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+const API_BASE = import.meta.env.API_BASE;
 
 
 const postHook = () => {
@@ -15,7 +15,7 @@ const postHook = () => {
     const postlist = async () => {
         try {
             setLoader(true);
-            const res = await axios.get("/api/postlist");
+            const res = await axios.get(`${API_BASE}/api/postlist`);
             setLoader(false);
             setPost(res.data.data || []);
         } catch (error) {

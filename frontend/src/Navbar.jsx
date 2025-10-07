@@ -3,6 +3,7 @@ import { FaCog, FaSignOutAlt, FaUserCircle, FaBars, FaTimes } from "react-icons/
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
+const API_BASE = import.meta.env.API_BASE;
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false); // profile dropdown
@@ -30,7 +31,7 @@ const Navbar = () => {
     const delay = setTimeout(async () => {
       if (query.trim() !== "") {
         try {
-          const res = await axios.get(`/api/search`, {
+          const res = await axios.get(`${API_BASE}/api/search`, {
             params: { q: query }
           });
           setResults(res.data);

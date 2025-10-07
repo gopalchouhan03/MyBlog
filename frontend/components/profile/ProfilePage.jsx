@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { FaArrowRight } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
+const API_BASE = import.meta.env.API_BASE;
 
 const ProfilePage = () => {
   const { userId } = useParams(); // profile being viewed
@@ -53,7 +54,7 @@ const ProfilePage = () => {
  const handleFollowToggle = async () => {
   try {
     // Use profileUser._id in URL, and logged-in user id in body
-    const url = `/api/users/${profileUser._id}/${isFollowing ? "unfollow" : "follow"}`;
+    const url = `${API_BASE}/api/users/${profileUser._id}/${isFollowing ? "unfollow" : "follow"}`;
     const res = await axios.put(url, { userId: user.id });
 
     if (res.data.success) {

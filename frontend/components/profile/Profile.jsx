@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import { FaArrowRight } from "react-icons/fa";
 import PostActions from "../post/PostActions";
+const API_BASE = import.meta.env.API_BASE;
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
@@ -29,7 +30,7 @@ const Profile = () => {
     const token = user?.token || localStorage.getItem("token");
 
     try {
-      const res = await axios.get(`/api/user/${user.id}`, {
+      const res = await axios.get(`${API_BASE}/api/user/${user.id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const userData = res.data.data.user;

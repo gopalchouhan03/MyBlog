@@ -7,11 +7,9 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://myblog-back.onrender.com",
-        changeOrigin: true,
-        secure: false,
+        target: "http://localhost:3000"
       },
     },
   },
-  plugins: [react(), tailwindcss()],
+  plugins: [react(),tailwindcss()],
 })

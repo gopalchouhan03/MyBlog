@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import axios from 'axios';
+const API_BASE = import.meta.env.API_BASE;
 import { useAuth } from "../context/AuthContext";
 
 
@@ -20,7 +21,7 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post("/api/login", {
+      const res = await axios.post(`${API_BASE}/api/login`, {
         username,
         password,
       });
