@@ -4,8 +4,6 @@ MyBlog is a modern, full-featured blogging platform built with the MERN stack (M
 It allows users to create, edit, publish, and share blog posts easily — with a clean UI, markdown editor, and secure authentication.
 
  Visit: https://myblog-frontend-eybf.onrender.com
- (frontend) and http://localhost:5000
- (backend)
  
 🚀 Features
 
