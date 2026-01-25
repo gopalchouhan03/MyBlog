@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import axios from 'axios';
-const API_BASE = import.meta.env.API_BASE;
 import { useAuth } from "../context/AuthContext";
 
 
@@ -21,17 +20,16 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post(`${API_BASE}/api/login`, {
+      const res = await axios.post('/api/login', {
         username,
         password,
       });
 
       if (res.data.success) {
-        setUser({ ...res.data.user, token: res.data.token }); // Save user + token
+        // Save both user data and token
+        const userData = { ...res.data.user, token: res.data.token };
+        setUser(userData);
         setIsAuth(true);
-
-        setIsAuth(true);
-        setUser(res.data.user);
         navigate("/");
       } else {
         alert(res.data.message || "Try again ❌");

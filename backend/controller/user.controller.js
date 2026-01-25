@@ -3,6 +3,7 @@ const { Post, Comment } = require("../model/postSchema");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
+const config = require('../config');
 
 
 
@@ -48,7 +49,7 @@ const register = async (req, res) => {
 
     const token = jwt.sign(
       { id: user._id, username: user.username, email: user.email },
-      process.env.JWT_SECRET,
+      config.JWT_SECRET,
       { expiresIn: "7d" }
     );
 
@@ -108,7 +109,7 @@ const login = async (req, res) => {
     // 3️⃣ Generate JWT
     const token = jwt.sign(
       { id: user._id, username: user.username, email: user.email },
-      process.env.JWT_SECRET,
+      config.JWT_SECRET,
       { expiresIn: "7d" }
     );
 
@@ -194,8 +195,18 @@ const profileData = async (req, res) => {
 const getUserProfile = async (req, res) => {
   const { userId } = req.params;
 
+  // Validate userId
+  if (!userId || userId === 'undefined') {
+    return res.status(400).json({ success: false, message: "User ID is required" });
+  }
+
   try {
-    const user = await User.findOne({ username: userId }).select("-password");
+    // Try to find by ID first (for MongoDB ObjectId), then by username
+    let user = await User.findById(userId).select("-password");
+    
+    if (!user) {
+      user = await User.findOne({ username: userId }).select("-password");
+    }
 
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
@@ -232,10 +243,9 @@ const getUserPosts = async (req, res) => {
 
 
 // ✅ Follow a user
-// ✅ Follow a user
 const followUser = async (req, res) => {
   const { userId } = req.params;           // ID of the user to follow
-  const { userId: currentUserId } = req.body; // ID of the logged-in user
+  const currentUserId = req.user.id;       // ID of the logged-in user from auth middleware
 
   try {
     if (userId === currentUserId) {
@@ -287,7 +297,7 @@ const followUser = async (req, res) => {
 // ✅ Unfollow a user
 const unfollowUser = async (req, res) => {
   const { userId } = req.params;           // ID of the user to unfollow
-  const { userId: currentUserId } = req.body; // ID of the logged-in user
+  const currentUserId = req.user.id;       // ID of the logged-in user from auth middleware
 
   try {
     if (userId === currentUserId) {
@@ -340,10 +350,21 @@ const unfollowUser = async (req, res) => {
   }
 };
 
+// ===================== LOGOUT =====================
+const logout = (req, res) => {
+  // Client-side token removal is handled by frontend
+  // This endpoint just confirms logout on backend
+  res.status(200).json({
+    success: true,
+    message: "Logged out successfully"
+  });
+};
+
 
 module.exports = {
   register,
   login,
+  logout,
   protectedRoute,
   editProfile,
   profileData,

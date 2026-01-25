@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { FaArrowRight } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
-const API_BASE = import.meta.env.API_BASE;
+import { userAPI } from "../../utils/apiClient";
 
 const ProfilePage = () => {
   const { userId } = useParams(); // profile being viewed
@@ -16,12 +16,14 @@ const ProfilePage = () => {
 
   // Fetch profile user info
   useEffect(() => {
+    if (!userId) return; // Don't fetch if userId is undefined
+    
     const fetchProfileUser = async () => {
       try {
-        const res = await axios.get(`/api/users/${userId}`);
+        const res = await userAPI.getUserProfile(userId);
         if (res.data.success) {
           setProfileUser(res.data.user);
-          setIsFollowing(res.data.user.followers?.includes(user.id));
+          setIsFollowing(res.data.user.followers?.includes(user?.id));
         }
       } catch (err) {
         console.error("Error fetching user:", err);
@@ -30,7 +32,7 @@ const ProfilePage = () => {
       }
     };
     fetchProfileUser();
-  }, [userId, user.id]);
+  }, [userId, user?.id]);
 
   // Fetch posts
   useEffect(() => {
@@ -38,7 +40,7 @@ const ProfilePage = () => {
 
     const fetchPosts = async () => {
       try {
-        const res = await axios.get(`/api/posts/${profileUser._id}`);
+        const res = await axios.get(`http://localhost:3000/api/posts/${profileUser._id}`);
         if (res.data.success) setPosts(res.data.posts);
       } catch (err) {
         console.error("Error fetching posts:", err);
@@ -52,10 +54,15 @@ const ProfilePage = () => {
   
   // Follow / Unfollow handler
  const handleFollowToggle = async () => {
+  if (!user?.id) {
+    alert("Please login to follow users");
+    return;
+  }
+  
   try {
-    // Use profileUser._id in URL, and logged-in user id in body
-    const url = `${API_BASE}/api/users/${profileUser._id}/${isFollowing ? "unfollow" : "follow"}`;
-    const res = await axios.put(url, { userId: user.id });
+    const res = isFollowing 
+      ? await userAPI.unfollowUser(profileUser._id, user.id)
+      : await userAPI.followUser(profileUser._id, user.id);
 
     if (res.data.success) {
       setIsFollowing(!isFollowing);

@@ -4,7 +4,6 @@ import { AuthContext } from "../../context/AuthContext";
 import CardItem from "./CardItem";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const API_BASE = import.meta.env.API_BASE;
 
 const Cards = () => {
   const { post, loader } = useOutletContext();
@@ -15,11 +14,11 @@ const Cards = () => {
 
   const handleLike = async (postId, setLikes, setLiked) => {
   try {
-    const res = await axios.post(`${API_BASE}/api/posts/${postId}/like`, { userId: currentUser._id });
+    const res = await axios.post(`/api/posts/${postId}/like`, { userId });
     console.log(res.data)
-    if (res.data.success) {
-      setLikes(res.data.likesCount);   // backend should return updated likes count
-      setLiked(res.data.liked);        // backend should return whether current user liked
+    if (res.data) {
+      setLikes(res.data.likes);   // backend returns updated likes count
+      setLiked(res.data.liked);   // backend returns whether current user liked
     }
   } catch (err) {
     console.error("Error liking post:", err);
@@ -29,7 +28,7 @@ const Cards = () => {
 
   const handleReadMore = async (id) => {
     try {
-      const res = await axios.get(`${API_BASE}/api/readmorepost/${id}`);
+      const res = await axios.get(`/api/readmorepost/${id}`);
       const fullPost = res.data.data;
       navigate("/readmore", { state: { fullPost, user } });
     } catch (error) {

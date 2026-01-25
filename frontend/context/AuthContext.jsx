@@ -13,7 +13,10 @@ export const AuthProvider = ({ children }) => {
   // Sync localStorage whenever user or isAuth changes
   useEffect(() => {
     if (isAuth && user) {
-      localStorage.setItem("token", user.token);
+      // Store token separately and the user object
+      if (user.token) {
+        localStorage.setItem("token", user.token);
+      }
       localStorage.setItem("user", JSON.stringify(user));
     }
   }, [isAuth, user]);

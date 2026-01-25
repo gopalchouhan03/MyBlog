@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from 'axios';
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-const API_BASE = import.meta.env.API_BASE;
 
 const CreatePost = () => {
   const [title, setTitle] = useState('');
@@ -16,7 +15,7 @@ const CreatePost = () => {
       const token = user?.token || localStorage.getItem("token");
 
       const res = await axios.post(
-        `${API_BASE}/api/createpost`,
+        '/api/createpost',
         { title, desc },
         { headers: { Authorization: `Bearer ${token}` } }
       );

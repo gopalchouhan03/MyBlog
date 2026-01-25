@@ -1,7 +1,6 @@
 import { FaHeart, FaRegComment, FaShareAlt, FaFacebookF, FaTwitter, FaWhatsapp, FaLink } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-const API_BASE = import.meta.env.API_BASE;
 
 const PostActions = ({ item, userId, handleLike }) => {
     const [likes, setLikes] = useState(item?.likes?.length || 0);
@@ -30,7 +29,7 @@ const PostActions = ({ item, userId, handleLike }) => {
 
     const fetchComments = async () => {
         try {
-            const res = await axios.get(`${API_BASE}/api/posts/${item._id}/comments`);
+            const res = await axios.get(`/api/posts/${item._id}/comments`);
             if (res.data.success) {
                 setComments(res.data.comments);
                 setCommentsCount(res.data.commentsCount);
@@ -41,7 +40,7 @@ const PostActions = ({ item, userId, handleLike }) => {
     const handleAddComment = async () => {
         if (!commentText.trim()) return;
         try {
-            const res = await axios.post(`${API_BASE}/api/posts/${item._id}/comment`, { userId, text: commentText });
+            const res = await axios.post(`/api/posts/${item._id}/comment`, { userId, text: commentText });
             console.log(res.data)
             if (res.data.success) {
                 setComments(res.data.comments);
@@ -56,7 +55,7 @@ const PostActions = ({ item, userId, handleLike }) => {
             const postUrl = window.location.origin + `/post/${item._id}`;
 
             // Increment share count in DB
-            const res = await axios.post(`${API_BASE}/api/posts/${item._id}/share`);
+            const res = await axios.post(`/api/posts/${item._id}/share`);
             if (res.data.success) setShares(res.data.shares);
 
             // Open respective platform

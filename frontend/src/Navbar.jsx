@@ -3,7 +3,6 @@ import { FaCog, FaSignOutAlt, FaUserCircle, FaBars, FaTimes } from "react-icons/
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
-const API_BASE = import.meta.env.API_BASE;
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false); // profile dropdown
@@ -31,7 +30,7 @@ const Navbar = () => {
     const delay = setTimeout(async () => {
       if (query.trim() !== "") {
         try {
-          const res = await axios.get(`${API_BASE}/api/search`, {
+          const res = await axios.get('/api/search', {
             params: { q: query }
           });
           setResults(res.data);
@@ -46,7 +45,7 @@ const Navbar = () => {
 
     return () => clearTimeout(delay);
   }, [query]);
- 
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsAuth(false);
@@ -62,12 +61,11 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 w-full bg-gray-100 shadow-md z-50">
       <div className="container mx-auto px-6 flex items-center justify-between py-3">
         {/* Left: Logo */}
-        <Link
-          to={"/"}
-          className="text-2xl font-bold text-gray-800 italic hover:text-blue-600"
-        >
+        <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-gray-800 italic hover:text-blue-600">
+          <img src="/logo.png" alt="MyBlog logo" className="w-10 h-10 rounded" />
           MyBlog
         </Link>
+
 
         {/* Center: Search (only large screens) */}
         <div className="hidden lg:flex flex-col relative flex-grow justify-center mx-6 max-w-md w-full">

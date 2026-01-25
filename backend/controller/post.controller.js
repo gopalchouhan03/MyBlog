@@ -4,14 +4,14 @@ const postList = async (req, res) => {
   try {
     const posts = await Post.find()
       .populate("author", "username fullName profileImage") // only fetch selected fields
-      .sort({ date: -1 }); // latest first
+      .sort({ createdAt: -1 }); // latest first
 
     const formattedPost = posts.map(post => ({
       ...post._doc,
-      author: post.author.username, // replace ObjectId with username
-      fullName: post.author.fullName,
-      profileImage: post.author.profileImage,
-      date: post.date.toLocaleDateString("en-GB").slice(0, 8), // "dd/mm/yy"
+      author: post.author?.username || "Unknown",
+      fullName: post.author?.fullName || "",
+      profileImage: post.author?.profileImage || "",
+      date: post.createdAt ? new Date(post.createdAt).toLocaleDateString("en-GB") : new Date().toLocaleDateString("en-GB"),
     }));
 
     res.status(200).json({
@@ -19,9 +19,10 @@ const postList = async (req, res) => {
       data: formattedPost,
     });
   } catch (error) {
+    console.error("PostList Error:", error);
     res.status(500).json({
       success: false,
-      message: "Something went wrong",
+      message: "Failed to fetch posts",
       error: error.message,
     });
   }
@@ -77,14 +78,19 @@ const readMorePost = async (req, res) => {
 
     const formattedPost = {
       ...post._doc,
-      author: post.author.username, // replace ObjectId with username
-      fullName: post.author.fullName,
-      profileImage: post.author.profileImage,
-      date: new Date(post.date).toLocaleDateString("en-IN", {
+      author: post.author?.username || "Unknown",
+      fullName: post.author?.fullName || "",
+      profileImage: post.author?.profileImage || "",
+      date: post.date ? new Date(post.date).toLocaleDateString("en-IN", {
         weekday: "short", // Mon
         year: "numeric", // 2025
         month: "short",  // Jan
         day: "numeric",  // 16
+      }) : new Date().toLocaleDateString("en-IN", {
+        weekday: "short",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
       }),
     };
 
@@ -102,10 +108,12 @@ const likes = async (req, res) => {
   try {
     const post = await Post.findById(postId);
 
-    if (!post) return res.status(404).json({ message: "Post not found" });
+    if (!post) return res.status(404).json({ success: false, message: "Post not found" });
 
-    // Check if user already liked
-    const index = post.likes.indexOf(userId);
+    // Check if user already liked (convert to string for comparison)
+    const userIdStr = userId.toString();
+    const index = post.likes.findIndex(id => id.toString() === userIdStr);
+    
     if (index === -1) {
       // not liked yet → add like
       post.likes.push(userId);
@@ -116,10 +124,14 @@ const likes = async (req, res) => {
 
     await post.save();
 
-    res.status(200).json({ likes: post.likes.length, liked: index === -1 });
+    res.status(200).json({ 
+      success: true,
+      likes: post.likes.length, 
+      liked: index === -1 
+    });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
@@ -217,13 +229,146 @@ const searchPosts = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+// ===================== UPDATE POST =====================
+const updatePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, desc, content, tags, coverImage } = req.body;
+
+    const post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).json({ success: false, message: "Post not found" });
+    }
+
+    // Check authorization
+    if (post.author.toString() !== req.user?.id) {
+      return res.status(403).json({ success: false, message: "Unauthorized" });
+    }
+
+    // Update fields
+    if (title) post.title = title;
+    if (desc) post.desc = desc;
+    if (content) post.content = content;
+    if (tags) post.tags = tags;
+    if (coverImage) post.coverImage = coverImage;
+    post.updatedAt = new Date();
+
+    await post.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Post updated successfully",
+      data: post
+    });
+  } catch (err) {
+    console.error("Update post error:", err);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
+// ===================== DELETE POST =====================
+const deletePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).json({ success: false, message: "Post not found" });
+    }
+
+    // Check authorization
+    if (post.author.toString() !== req.user?.id) {
+      return res.status(403).json({ success: false, message: "Unauthorized" });
+    }
+
+    // Delete associated comments
+    await Comment.deleteMany({ post: id });
+
+    // Delete post
+    await Post.findByIdAndDelete(id);
+
+    res.status(200).json({
+      success: true,
+      message: "Post deleted successfully"
+    });
+  } catch (err) {
+    console.error("Delete post error:", err);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
+// ===================== ADD BOOKMARK =====================
+const bookmarkPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userId } = req.body;
+
+    const post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).json({ success: false, message: "Post not found" });
+    }
+
+    const bookmarkIndex = post.bookmarks.indexOf(userId);
+    const isBookmarked = bookmarkIndex === -1 ? false : true;
+
+    if (!isBookmarked) {
+      post.bookmarks.push(userId);
+    } else {
+      post.bookmarks.splice(bookmarkIndex, 1);
+    }
+
+    await post.save();
+
+    res.status(200).json({
+      success: true,
+      message: isBookmarked ? "Bookmark removed" : "Post bookmarked",
+      isBookmarked: !isBookmarked,
+      bookmarkCount: post.bookmarks.length
+    });
+  } catch (err) {
+    console.error("Bookmark error:", err);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
+// ===================== DELETE COMMENT =====================
+const deleteComment = async (req, res) => {
+  try {
+    const { commentId } = req.params;
+    const { userId } = req.body;
+
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+      return res.status(404).json({ success: false, message: "Comment not found" });
+    }
+
+    // Check authorization
+    if (comment.user.toString() !== userId) {
+      return res.status(403).json({ success: false, message: "Unauthorized" });
+    }
+
+    await Comment.findByIdAndDelete(commentId);
+
+    res.status(200).json({
+      success: true,
+      message: "Comment deleted successfully"
+    });
+  } catch (err) {
+    console.error("Delete comment error:", err);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
 
 module.exports = {
   postList,
   createPost,
   readMorePost,
+  updatePost,
+  deletePost,
   likes,
+  bookmarkPost,
   addComment,
+  deleteComment,
   getComments,
   incrementShare,
   searchPosts
