@@ -34,7 +34,6 @@ jobs:
           [ -z "${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}" ] && echo "❌ Missing CLOUDFRONT_DISTRIBUTION_ID" && exit 1
           [ -z "${{ secrets.AWS_ACCESS_KEY_ID }}" ] && echo "❌ Missing AWS_ACCESS_KEY_ID" && exit 1
           [ -z "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ] && echo "❌ Missing AWS_SECRET_ACCESS_KEY" && exit 1
-          [ -z "${{ secrets.VITE_API_URL }}" ] && echo "❌ Missing VITE_API_URL" && exit 1
           echo "✅ All required secrets are present"
 
       # ---------------------------
@@ -56,16 +55,17 @@ jobs:
           npm ci
 
       # ---------------------------
-      # 5. Build Frontend (IMPORTANT FIX)
+      # 5. Build Frontend
       # ---------------------------
-      - name: Build frontend with correct API URL
+      - name: Build frontend
         run: |
           cd frontend
-          echo "🚀 Building frontend with API URL: $VITE_API_URL"
+          echo "🚀 Building frontend..."
+          echo "🔗 Backend API: https://d2w8d5sgt2ne9t.cloudfront.net/api"
+          echo "🌍 Frontend: https://d3hpld8vt7tywq.cloudfront.net"
           npm run build
         env:
           CI: true
-          VITE_API_URL: ${{ secrets.VITE_API_URL }}
 
       # ---------------------------
       # 6. Verify Build Output
@@ -136,5 +136,10 @@ jobs:
         run: |
           echo "🎉 Frontend deployment successful!"
           echo "🌍 Frontend URL: https://d3hpld8vt7tywq.cloudfront.net"
+          echo "================================"
+          echo "🌍 Frontend URL: https://d3hpld8vt7tywq.cloudfront.net"
+          echo "🔗 Backend API: https://d2w8d5sgt2ne9t.cloudfront.net/api"
           echo "🪣 S3 Bucket: s3://${{ secrets.S3_BUCKET_NAME }}"
-          echo "🔗 API URL used: ${{ secrets.VITE_API_URL }}"
+          echo "================================"
+          echo "⚠️  Ensure backend CORS origin is set to:"
+          echo "    https://d3hpld8vt7tywq.cloudfront.net
