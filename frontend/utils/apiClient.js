@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
 
 // Create axios instance with default config
 const apiClient = axios.create({

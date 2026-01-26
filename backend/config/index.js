@@ -12,7 +12,7 @@ module.exports = {
   JWT_EXPIRE: process.env.JWT_EXPIRE || '7d',
   
   // CORS
-  CORS_ORIGIN: (process.env.CORS_ORIGIN || 'http://localhost:5173').split(','),
+  CORS_ORIGIN: (process.env.CORS_ORIGIN || 'https://d3hpld8vt7tywq.cloudfront.net').split(','),
   
   // Features
   ENABLE_IMAGE_UPLOAD: process.env.CLOUDINARY_NAME ? true : false,

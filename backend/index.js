@@ -9,7 +9,7 @@ const config = require('./config');
 const routes = require('./routes/post.routes');
 
 const app = express();
-
+app.set("trust proxy", 1);
 // ============ SECURITY MIDDLEWARE ============
 app.use(helmet()); // Set HTTP security headers
 

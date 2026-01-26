@@ -40,7 +40,7 @@ const ProfilePage = () => {
 
     const fetchPosts = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/posts/${profileUser._id}`);
+        const res = await axios.get(`https://d2w8d5sgt2ne9t.cloudfront.net/api/posts/${profileUser._id}`);
         if (res.data.success) setPosts(res.data.posts);
       } catch (err) {
         console.error("Error fetching posts:", err);

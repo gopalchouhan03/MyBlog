@@ -3,6 +3,7 @@
 .env.local
 .env.*.local
 
+.pem
 # Dependencies
 node_modules/
 npm-debug.log*
@@ -25,7 +26,7 @@ dist/
 build/
 out/
 
-.pem
+
 # OS
 Thumbs.db
 
