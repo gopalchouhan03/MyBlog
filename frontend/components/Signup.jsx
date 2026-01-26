@@ -4,6 +4,8 @@ import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
+const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
+
 const Signup = () => {
   const [form, setForm] = useState({
     username: "",
@@ -37,7 +39,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await axios.post('/api/register', {
+      const res = await axios.post(`${API_BASE_URL}/register`, {
         username,
         fullName,
         email,

@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 
+const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
+
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false); // profile dropdown
   const [navOpen, setNavOpen] = useState(false); // mobile menu
@@ -30,7 +32,7 @@ const Navbar = () => {
     const delay = setTimeout(async () => {
       if (query.trim() !== "") {
         try {
-          const res = await axios.get('/api/search', {
+          const res = await axios.get(`${API_BASE_URL}/search`, {
             params: { q: query }
           });
           setResults(res.data);

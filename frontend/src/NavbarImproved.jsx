@@ -6,6 +6,8 @@ import { useTheme } from "../hooks/useTheme";
 import { showSuccess, showError } from "../utils/toast";
 import axios from "axios";
 
+const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
+
 const NavbarImproved = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
@@ -33,7 +35,7 @@ const NavbarImproved = () => {
     const delay = setTimeout(async () => {
       if (query.trim() !== "") {
         try {
-          const res = await axios.get('/api/search', {
+          const res = await axios.get(`${API_BASE_URL}/search`, {
             params: { q: query }
           });
           setResults(res.data);
@@ -51,7 +53,7 @@ const NavbarImproved = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('/api/logout');
+      await axios.post(`${API_BASE_URL}/logout`);
       logout();
       showSuccess('Logged out successfully');
       navigate("/login");

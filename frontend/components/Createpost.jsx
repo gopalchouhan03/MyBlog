@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
+
 const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
@@ -15,7 +17,7 @@ const CreatePost = () => {
       const token = user?.token || localStorage.getItem("token");
 
       const res = await axios.post(
-        '/api/createpost',
+        `${API_BASE_URL}/createpost`,
         { title, desc },
         { headers: { Authorization: `Bearer ${token}` } }
       );

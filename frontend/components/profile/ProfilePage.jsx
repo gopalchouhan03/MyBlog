@@ -5,6 +5,8 @@ import { FaArrowRight } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
 import { userAPI } from "../../utils/apiClient";
 
+const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
+
 const ProfilePage = () => {
   const { userId } = useParams(); // profile being viewed
   const [profileUser, setProfileUser] = useState(null);
@@ -40,7 +42,7 @@ const ProfilePage = () => {
 
     const fetchPosts = async () => {
       try {
-        const res = await axios.get(`https://d2w8d5sgt2ne9t.cloudfront.net/api/posts/${profileUser._id}`);
+        const res = await axios.get(`${API_BASE_URL}/posts/${profileUser._id}`);
         if (res.data.success) setPosts(res.data.posts);
       } catch (err) {
         console.error("Error fetching posts:", err);

@@ -5,6 +5,8 @@ import CardItem from "./CardItem";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
+
 const Cards = () => {
   const { post, loader } = useOutletContext();
   const { user } = useContext(AuthContext);
@@ -14,7 +16,7 @@ const Cards = () => {
 
   const handleLike = async (postId, setLikes, setLiked) => {
   try {
-    const res = await axios.post(`/api/posts/${postId}/like`, { userId });
+    const res = await axios.post(`${API_BASE_URL}/posts/${postId}/like`, { userId });
     console.log(res.data)
     if (res.data) {
       setLikes(res.data.likes);   // backend returns updated likes count
@@ -28,7 +30,7 @@ const Cards = () => {
 
   const handleReadMore = async (id) => {
     try {
-      const res = await axios.get(`/api/readmorepost/${id}`);
+      const res = await axios.get(`${API_BASE_URL}/readmorepost/${id}`);
       const fullPost = res.data.data;
       navigate("/readmore", { state: { fullPost, user } });
     } catch (error) {

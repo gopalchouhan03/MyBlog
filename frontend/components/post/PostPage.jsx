@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
+const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
+
 const PostPage = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
@@ -9,7 +11,7 @@ const PostPage = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await axios.get(`/api/post/${id}`);
+        const res = await axios.get(`${API_BASE_URL}/post/${id}`);
         setPost(res.data);
       } catch (err) {
         console.error("Error fetching post:", err);

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
+
 const EditProfile = ({ userId }) => {
   const [form, setForm] = useState({ fullName: "", bio: "", profileImage: "" });
 
   useEffect(() => {
     // Fetch existing user data
-    axios.get(`/api/users/${userId}`)
+    axios.get(`${API_BASE_URL}/users/${userId}`)
       .then(res => setForm(res.data.data))
       .catch(err => console.error(err));
   }, [userId]);
@@ -17,7 +19,7 @@ const EditProfile = ({ userId }) => {
 
   const handleSave = async () => {
     try {
-      await axios.put(`/api/users/${userId}/edit`, form);
+      await axios.put(`${API_BASE_URL}/users/${userId}/edit`, form);
       alert("Profile updated ✅");
     } catch (error) {
       console.error(error);

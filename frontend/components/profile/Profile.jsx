@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import { FaArrowRight } from "react-icons/fa";
+
+const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
 import PostActions from "../post/PostActions";
 
 const Profile = () => {
@@ -29,7 +31,7 @@ const Profile = () => {
     const token = user?.token || localStorage.getItem("token");
 
     try {
-      const res = await axios.get(`/api/user/${user.id}`, {
+      const res = await axios.get(`${API_BASE_URL}/user/${user.id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const userData = res.data.data.user;
@@ -177,7 +179,7 @@ const Profile = () => {
                 userId={user?.id}
                 handleLike={async (postId, setLikes, setLiked) => {
                   try {
-                    const res = await axios.post(`/api/posts/${postId}/like`, { userId: user.id });
+                    const res = await axios.post(`${API_BASE_URL}/posts/${postId}/like`, { userId: user.id });
                     if (res.data.success) {
                       setLikes(res.data.likesCount);
                       setLiked(res.data.liked);

@@ -4,6 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import axios from 'axios';
 import { useAuth } from "../context/AuthContext";
 
+const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -20,7 +21,7 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post('/api/login', {
+      const res = await axios.post(`${API_BASE_URL}/login`, {
         username,
         password,
       });
