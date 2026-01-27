@@ -24,7 +24,7 @@ const CreatePost = () => {
 
       if (res.data.success) {
         alert("✅ Post created successfully!");
-        navigate("/"); // navigate to homepage
+        navigate("/");
         setTitle("");
         setDesc("");
       } else {
