@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
+const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api';
 
 // Create axios instance with default config
 const apiClient = axios.create({
