@@ -126,24 +126,29 @@ const Login = () => {
             </button>
           </form>
 
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full btn-gradient py-3 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isLoading ? "Signing in..." : "Sign In"}
-        </button>
-      </form>
+          {/* Divider */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-white/20"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-gray-400">New to MyBlog?</span>
+            </div>
+          </div>
 
-      <div className="relative my-6">
-          Don’t have an account?{" "}
-          <span
-            className="text-indigo-600 font-semibold cursor-pointer"
-            onClick={() => navigate("/signup")}
+          {/* Sign Up Link */}
+          <Link
+            to="/signup"
+            className="block w-full btn-secondary py-3 font-semibold text-center"
           >
-            Sign Up
-          </span>
-        </p>
+            Create Account
+          </Link>
+
+          {/* Footer */}
+          <p className="text-center text-xs text-gray-400 mt-6">
+            By signing in, you agree to our <a href="#" className="text-blue-400 hover:underline">Terms</a> and <a href="#" className="text-blue-400 hover:underline">Privacy Policy</a>
+          </p>
+        </div>
       </div>
     </div>
   );
