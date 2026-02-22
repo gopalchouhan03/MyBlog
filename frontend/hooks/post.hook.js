@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api
-';
+const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api';
 
 const postHook = () => {
 
