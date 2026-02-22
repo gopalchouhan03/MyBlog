@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FaCog, FaSignOutAlt, FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
+import { FaCog, FaSignOutAlt, FaUserCircle, FaBars, FaTimes, FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
@@ -7,16 +7,15 @@ import axios from "axios";
 const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api';
 
 const Navbar = () => {
-  const [menuOpen, setMenuOpen] = useState(false); // profile dropdown
-  const [navOpen, setNavOpen] = useState(false); // mobile menu
-  const [query, setQuery] = useState(""); // search query
-  const [results, setResults] = useState([]); // search results
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
   const menuRef = useRef(null);
 
-  const { isAuth, setIsAuth } = useAuth();
+  const { isAuth, setIsAuth, user } = useAuth();
   const navigate = useNavigate();
 
-  // Close profile dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -26,7 +25,6 @@ const Navbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
 
   useEffect(() => {
     const delay = setTimeout(async () => {
@@ -51,184 +49,202 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsAuth(false);
-    alert("Log out");
     navigate("/login");
+    setMenuOpen(false);
   };
 
   const handleLogin = () => {
     navigate("/login");
+    setNavOpen(false);
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-gray-100 shadow-md z-50">
-      <div className="container mx-auto px-6 flex items-center justify-between py-3">
-        {/* Left: Logo */}
-        <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-gray-800 italic hover:text-blue-600">
-          <img src="/logo.png" alt="MyBlog logo" className="w-10 h-10 rounded" />
-          MyBlog
-        </Link>
-
-
-        {/* Center: Search (only large screens) */}
-        <div className="hidden lg:flex flex-col relative flex-grow justify-center mx-6 max-w-md w-full">
-          <div className="flex">
-            <input
-              type="search"
-              placeholder="Search"
-              className="m-1 px-4 py-2 border rounded-l focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-            <button
-              type="button"
-              className="cursor-pointer m-1 px-4 py-2 border border-l-0 rounded-r bg-blue-600 text-white hover:bg-blue-700"
-            >
-              Search
-            </button>
-          </div>
-
-          {/* Dropdown Results */}
-          {results.length > 0 && (
-            <ul className="absolute top-14 left-0 w-full bg-white shadow-lg rounded-md max-h-60 overflow-y-auto z-50">
-              {results.map((post) => (
-                <li
-                  key={post._id}
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => {
-                    setQuery("");
-                    setResults([]);
-                    navigate(`/post/${post._id}`);
-                  }}
-                >
-                  <strong>{post.title}</strong>
-                  <p className="text-sm text-gray-500 truncate">{post.content}</p>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        {/* Right: Links (desktop) */}
-        <div className="hidden lg:flex items-center space-x-6">
-          <Link
-            to={"/"}
-            className="text-gray-700 hover:text-blue-600 font-medium text-lg"
-          >
-            Home
-          </Link>
-          <Link
-            to={"/createpost"}
-            className="text-gray-700 hover:text-blue-600 font-medium text-lg"
-          >
-            Create Post
+    <nav className="fixed top-0 left-0 w-full backdrop-blur-md bg-white/80 shadow-lg z-50 border-b border-gray-100">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between py-4">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:shadow-xl transition-all">
+              M
+            </div>
+            <span className="text-xl font-bold gradient-text hidden sm:inline">MyBlog</span>
           </Link>
 
-          {/* Profile / Login */}
-          <div className="relative" ref={menuRef}>
-            {isAuth ? (
-              <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                className="flex items-center space-x-2 focus:outline-none"
-              >
-                <img
-                  src="https://randomuser.me/api/portraits/men/32.jpg"
-                  alt="User"
-                  className="w-10 h-10 rounded-full border-2 border-gray-300 hover:border-blue-500 transition cursor-pointer"
-                />
-              </button>
-            ) : (
-              <button
-                className="px-6 py-2 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold shadow-md hover:from-pink-600 hover:to-purple-700"
-                onClick={handleLogin}
-              >
-                Login
-              </button>
-            )}
+          {/* Center: Search (desktop) */}
+          <div className="hidden md:flex flex-1 max-w-2xl mx-8 relative">
+            <div className="flex items-center w-full">
+              <FaSearch className="absolute left-4 text-gray-400" />
+              <input
+                type="search"
+                placeholder="Search articles, stories..."
+                className="w-full pl-12 pr-4 py-2.5 bg-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all text-sm"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </div>
 
-            {/* Dropdown */}
-            {menuOpen && isAuth && (
-              <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg py-2 z-50">
-                <Link
-                  to="/profile"
-                  className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
-                  <FaUserCircle className="mr-2" /> Profile
-                </Link>
-                <Link
-                  to="/login"
-                  className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
-                  onClick={handleLogout}
-                >
-                  <FaSignOutAlt className="mr-2" /> Logout
-                </Link>
-                <Link
-                  to={"/settings"}
-                  className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
-                  <FaCog className="mr-2" /> Settings
-                </Link>
-              </div>
+            {/* Search Dropdown */}
+            {results.length > 0 && (
+              <ul className="absolute top-14 left-0 right-0 bg-white shadow-xl rounded-xl max-h-64 overflow-y-auto z-50 border border-gray-100">
+                {results.map((post) => (
+                  <li
+                    key={post._id}
+                    className="px-4 py-3 hover:bg-blue-50 cursor-pointer border-b border-gray-50 last:border-0 transition-colors"
+                    onClick={() => {
+                      setQuery("");
+                      setResults([]);
+                      navigate(`/post/${post._id}`);
+                    }}
+                  >
+                    <p className="font-semibold text-gray-800 text-sm">{post.title}</p>
+                    <p className="text-xs text-gray-500 truncate mt-1">{post.content}</p>
+                  </li>
+                ))}
+              </ul>
             )}
           </div>
-        </div>
 
-        {/* Mobile Hamburger */}
-        <div className="lg:hidden cursor-pointer">
-          <button
-            onClick={() => setNavOpen(!navOpen)}
-            className="text-2xl text-gray-700 focus:outline-none"
-          >
-            {navOpen ? <FaTimes className="cursor-pointer" /> : <FaBars className="cursor-pointer" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Slide Menu */}
-      <div
-        className={`lg:hidden bg-gray-100 shadow-md transform transition-transform duration-300 ease-in-out ${navOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
-          }`}
-      >
-        <ul className="flex flex-col space-y-4 mt-3 px-6 pb-4">
-          <li>
-            <Link
-              to={"/"}
-              className="text-gray-700 hover:text-blue-600 font-medium text-lg"
-              onClick={() => setNavOpen(false)}
-            >
+          {/* Right: Navigation & CTA */}
+          <div className="hidden lg:flex items-center gap-8">
+            <Link to="/" className="text-gray-700 font-medium hover:gradient-text transition-all text-sm">
               Home
             </Link>
-          </li>
-          <li>
-            <Link
-              to={"/createpost"}
-              className="text-gray-700 hover:text-blue-600 font-medium text-lg cursor-pointer"
-              onClick={() => setNavOpen(false)}
-            >
-              Create Post
+            <Link to="/createpost" className="text-gray-700 font-medium hover:gradient-text transition-all text-sm">
+              Write
             </Link>
-          </li>
-          <li>
-            {isAuth ? (
+
+            {/* Profile or Login */}
+            <div className="relative" ref={menuRef}>
+              {isAuth ? (
+                <button
+                  onClick={() => setMenuOpen(!menuOpen)}
+                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-all"
+                >
+                  <img
+                    src={user?.profileImage || `https://randomuser.me/api/portraits/men/32.jpg`}
+                    alt="User"
+                    className="w-9 h-9 rounded-full object-cover border-2 border-blue-500 shadow-md"
+                  />
+                  <span className="text-sm font-semibold text-gray-700 hidden sm:inline">{user?.username || "User"}</span>
+                </button>
+              ) : (
+                <button
+                  className="btn-gradient text-sm px-5 py-2.5"
+                  onClick={handleLogin}
+                >
+                  Sign In
+                </button>
+              )}
+
+              {/* Dropdown Menu */}
+              {menuOpen && isAuth && (
+                <div className="absolute right-0 mt-3 w-56 bg-white shadow-2xl rounded-xl py-2 border border-gray-100 animate-fadeInUp">
+                  <Link
+                    to="/profile"
+                    className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <FaUserCircle className="text-blue-600" /> My Profile
+                  </Link>
+                  <Link
+                    to="/settings"
+                    className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-blue-50 transition-colors"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <FaCog className="text-gray-600" /> Settings
+                  </Link>
+                  <hr className="my-2 border-gray-100" />
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 transition-colors cursor-pointer text-left"
+                  >
+                    <FaSignOutAlt /> Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Mobile Hamburger */}
+          <button
+            onClick={() => setNavOpen(!navOpen)}
+            className="lg:hidden text-2xl text-gray-700 hover:text-blue-600 transition-colors"
+          >
+            {navOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {navOpen && (
+          <div className="lg:hidden pb-4 animate-slideInDown">
+            {/* Mobile Search */}
+            <div className="mb-4 flex items-center">
+              <FaSearch className="absolute left-6 text-gray-400" />
+              <input
+                type="search"
+                placeholder="Search..."
+                className="w-full ml-6 pl-8 pr-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </div>
+
+            <div className="flex flex-col gap-3">
               <Link
-                to="/profile"
-                className="text-gray-700 hover:text-blue-600 font-medium text-lg cursor-pointer"
+                to="/"
+                className="text-gray-700 font-medium hover:text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-50"
                 onClick={() => setNavOpen(false)}
               >
-                Profile
+                Home
               </Link>
-            ) : (
-              <button
-                className="text-gray-700 hover:text-blue-600 font-medium text-lg text-left cursor-pointer"
-                onClick={() => {
-                  setNavOpen(false);
-                  handleLogin();
-                }}
+              <Link
+                to="/createpost"
+                className="text-gray-700 font-medium hover:text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-50"
+                onClick={() => setNavOpen(false)}
               >
-                Login
-              </button>
-            )}
-          </li>
-        </ul>
+                Write Article
+              </Link>
+              {isAuth && (
+                <>
+                  <Link
+                    to="/profile"
+                    className="text-gray-700 font-medium hover:text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-50"
+                    onClick={() => setNavOpen(false)}
+                  >
+                    My Profile
+                  </Link>
+                  <Link
+                    to="/settings"
+                    className="text-gray-700 font-medium hover:text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-50"
+                    onClick={() => setNavOpen(false)}
+                  >
+                    Settings
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setNavOpen(false);
+                    }}
+                    className="text-red-600 font-medium hover:bg-red-50 px-4 py-2 rounded-lg text-left w-full"
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
+              {!isAuth && (
+                <button
+                  className="btn-gradient w-full py-2.5 text-sm"
+                  onClick={() => {
+                    handleLogin();
+                    setNavOpen(false);
+                  }}
+                >
+                  Sign In
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );

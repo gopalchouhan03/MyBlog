@@ -1,59 +1,82 @@
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaClock, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import PostActions from "./PostActions";
 
 const CardItem = ({ item, index, userId, handleReadMore, handleLike }) => {
   if (!item) return null;
   
+  // Format date nicely
+  const formatDate = (date) => {
+    if (!date) return "";
+    const d = new Date(date);
+    const now = new Date();
+    const diff = now - d;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    
+    if (days === 0) return "Today";
+    if (days === 1) return "Yesterday";
+    if (days < 7) return `${days}d ago`;
+    if (days < 30) return `${Math.floor(days / 7)}w ago`;
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: d.getFullYear() !== now.getFullYear() ? 'numeric' : undefined });
+  };
+
   return (
-    <div className="group bg-white rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200 w-full max-w-md mx-auto sm:max-w-lg lg:max-w-xl relative">
-      {/* Thumbnail */}
-      <div className="relative h-48 sm:h-56 md:h-64 w-full rounded-t-3xl overflow-hidden">
+    <div className="group card-modern overflow-hidden h-full flex flex-col animate-fadeInUp">
+      {/* Image Container */}
+      <div className="relative h-48 sm:h-56 overflow-hidden bg-gradient-to-br from-blue-400 to-purple-500">
         <img
           src={`https://picsum.photos/500/300?random=${index}`}
           alt="Blog Thumbnail"
-          className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-t-3xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
       </div>
 
-      {/* Content */}
-      <div className="p-4 sm:p-5 md:p-6">
-        <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-2 group-hover:text-pink-600 transition-colors line-clamp-2">
-          {item?.title || "Untitled"}
+      {/* Content Section */}
+      <div className="p-5 sm:p-6 flex-1 flex flex-col">
+        {/* Title */}
+        <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:gradient-text transition-all duration-300">
+          {item?.title || "Untitled Post"}
         </h2>
-        <p className="text-gray-600 text-sm md:text-base mb-4 line-clamp-3">{item?.desc || ""}</p>
 
-        {/* Author + Date */}
+        {/* Description */}
+        <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-1">
+          {item?.desc || "No description available"}
+        </p>
+
+        {/* Author Info */}
         <Link
-          to={`/profile/${item.author}`} // Navigate to real user profile
-          className="flex items-center gap-3 mb-4"
+          to={`/profile/${item.author}`}
+          className="flex items-center gap-3 mb-4 hover:opacity-80 transition-opacity"
         >
           <img
-            src={item.profileImage || `https://randomuser.me/api/portraits/men/${index + 10}.jpg`}
-            alt={item.authorName || "Unknown"}
-            className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-gray-200"
+            src={item.profileImage || `https://randomuser.me/api/portraits/${index % 2 === 0 ? 'men' : 'women'}/${(index % 70) + 1}.jpg`}
+            alt={item.author || "Author"}
+            className="w-10 h-10 rounded-full object-cover border-2 border-blue-100 shadow-sm"
           />
-          <div className="flex flex-col">
-            <h3 className="font-semibold text-gray-800 text-sm md:text-base">
-              {item.author || "Unknown"}
-            </h3>
-            <p className="text-gray-500 text-xs md:text-sm">{item.date || ""}</p>
+          <div className="flex-1">
+            <p className="font-semibold text-gray-800 text-sm">
+              {item.author || "Anonymous"}
+            </p>
+            <div className="flex items-center gap-1 text-xs text-gray-500">
+              <FaClock size={11} />
+              {formatDate(item.date)}
+            </div>
           </div>
         </Link>
 
-
-        {/* Read More */}
-        <button
-          className=" cursor-pointer inline-flex items-center text-pink-600 font-semibold text-sm md:text-base hover:underline"
-          onClick={() => handleReadMore(item?._id)}
-        >
-          Read More <FaArrowRight className="ml-1 text-sm" />
-        </button>
+        {/* Footer: CTA & Actions */}
+        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+          <button
+            onClick={() => handleReadMore(item?._id)}
+            className="inline-flex items-center gap-2 text-blue-600 font-semibold text-sm hover:text-blue-700 hover:gap-3 transition-all duration-300 group/btn"
+          >
+            Read More
+            <FaArrowRight className="text-xs group-hover/btn:translate-x-1 transition-transform" />
+          </button>
+          <PostActions item={item} userId={userId} handleLike={handleLike} />
+        </div>
       </div>
-
-      {/* Post Actions */}
-      <PostActions item={item} userId={userId} handleLike={handleLike} />
     </div>
   );
 };
