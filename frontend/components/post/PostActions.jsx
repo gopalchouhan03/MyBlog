@@ -75,26 +75,26 @@ const PostActions = ({ item, userId, handleLike }) => {
         }
     };
     return (
-        <div className="border-t bg-white relative">
+        <div className="bg-white relative">
 
             {/* Action Buttons */}
             <div className="flex items-center justify-between px-3 sm:px-6 py-3 sm:py-4">
                 {/* Like */}
                 <button
                     onClick={() => userId ? handleLike(item._id, setLikes, setLiked) : alert("Please login")}
-                    className={` cursor-pointer flex items-center gap-1 sm:gap-2 text-lg sm:text-xl md:text-2xl transition-transform duration-200 ${liked ? "text-red-500 scale-110" : "text-gray-600 hover:text-red-400"}`}
+                    className={` cursor-pointer flex items-center gap-1 sm:gap-2 text-base sm:text-lg transition-transform duration-200 ${liked ? "text-red-500 scale-110" : "text-gray-600 hover:text-red-400"}`}
                 >
                     <FaHeart />
-                    <span className={`text-sm sm:text-base md:text-lg font-semibold ${liked ? "text-red-500" : "text-gray-800"}`}>{likes}</span>
+                    <span className={`text-sm sm:text-sm font-semibold ${liked ? "text-red-500" : "text-gray-800"}`}>{likes}</span>
                 </button>
 
                 {/* Comment */}
                 <button
                     onClick={() => setShowComments(!showComments)}
-                    className=" cursor-pointer flex items-center gap-1 sm:gap-2 text-lg sm:text-xl md:text-2xl text-gray-600 hover:text-blue-500 transition-transform duration-200"
+                    className=" cursor-pointer flex items-center gap-1 sm:gap-2 text-base sm:text-lg text-gray-600 hover:text-blue-500 transition-transform duration-200"
                 >
                     <FaRegComment />
-                    <span className="text-sm sm:text-base md:text-lg font-semibold text-gray-800">{commentsCount}</span>
+                    <span className="text-sm sm:text-sm font-semibold text-gray-800">{commentsCount}</span>
                 </button>
 
                 {/* Share */}
@@ -102,10 +102,10 @@ const PostActions = ({ item, userId, handleLike }) => {
                 <div className="relative" ref={shareRef}>
                     <button
                         onClick={() => setShowShare(!showShare)}
-                        className=" cursor-pointer flex items-center gap-1 sm:gap-2 text-lg sm:text-xl md:text-2xl text-gray-600 hover:text-green-500 transition-transform duration-200"
+                        className=" cursor-pointer flex items-center gap-1 sm:gap-2 text-base sm:text-lg text-gray-600 hover:text-green-500 transition-transform duration-200"
                     >
                         <FaShareAlt />
-                        <span className="text-sm sm:text-base md:text-lg font-semibold text-gray-800">{shares}</span>
+                        <span className="text-sm sm:text-sm font-semibold text-gray-800">{shares}</span>
 
                     </button>
 
@@ -123,7 +123,7 @@ const PostActions = ({ item, userId, handleLike }) => {
             {/* Comments Dropdown */}
             <div
                 ref={commentRef}
-                className={`absolute left-0 top-full z-10 mt-1 w-full max-w-full sm:max-w-md lg:max-w-lg border bg-gray-50 rounded-b-2xl shadow-lg transition-all duration-300 overflow-hidden ${showComments ? "max-h-80 opacity-100" : "max-h-0 opacity-0"}`}
+                className={`absolute left-0 top-full z-50 mt-1 w-full max-w-full sm:max-w-md lg:max-w-lg border bg-gray-50 rounded-b-2xl shadow-lg transition-all duration-300 overflow-hidden ${showComments ? "max-h-80 opacity-100" : "max-h-0 opacity-0"}`}
             >
                 {/* Comments List */}
                 <div className="max-h-56 overflow-y-auto px-3 py-2">

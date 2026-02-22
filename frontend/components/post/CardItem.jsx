@@ -21,7 +21,7 @@ const CardItem = ({ item, index, userId, handleReadMore, handleLike }) => {
   };
 
   return (
-    <div className="group card-modern overflow-hidden h-full flex flex-col">
+    <div className="group card-modern overflow-visible h-full flex flex-col">
       {/* Image Container */}
       <div className="relative h-40 sm:h-48 overflow-hidden bg-gray-200">
         <img

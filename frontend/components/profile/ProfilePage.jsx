@@ -168,7 +168,7 @@ const ProfilePage = () => {
                   />
                   <div className="flex flex-col">
                     <h3 className="font-semibold text-gray-800 text-sm md:text-base">{item?.author?.username || "Unknown"}</h3>
-                    <p className="text-gray-500 text-xs md:text-sm">{new Date(item?.createdAt).toLocaleDateString() || ""}</p>
+                    <p className="text-gray-500 text-xs md:text-sm">{item?.createdAt ? new Date(item.createdAt).toLocaleDateString() : ""}</p>
                   </div>
                 </Link>
 

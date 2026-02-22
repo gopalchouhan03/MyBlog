@@ -159,7 +159,7 @@ const Profile = () => {
                       {item?.author?.username || "Unknown"}
                     </h3>
                     <p className="text-gray-500 text-xs md:text-sm">
-                      {new Date(item?.createdAt).toLocaleDateString() || ""}
+                      {item?.createdAt ? new Date(item.createdAt).toLocaleDateString() : ""}
                     </p>
                   </div>
                 </Link>
