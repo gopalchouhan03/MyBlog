@@ -7,8 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://myblog-backend-t9rr.onrender.com/api
-"
+        target: "https://myblog-backend-t9rr.onrender.com/api"
       },
     },
   },
