@@ -4,7 +4,8 @@ import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import { FaArrowRight } from "react-icons/fa";
 
-const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
+const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api
+';
 import PostActions from "../post/PostActions";
 
 const Profile = () => {

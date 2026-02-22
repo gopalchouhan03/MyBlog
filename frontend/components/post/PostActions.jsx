@@ -2,7 +2,8 @@ import { FaHeart, FaRegComment, FaShareAlt, FaFacebookF, FaTwitter, FaWhatsapp, 
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
-const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
+const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api
+';
 
 const PostActions = ({ item, userId, handleLike }) => {
     const [likes, setLikes] = useState(item?.likes?.length || 0);

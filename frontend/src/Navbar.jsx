@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 
-const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
+const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api
+';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false); // profile dropdown

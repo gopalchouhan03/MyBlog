@@ -6,7 +6,8 @@ import { useTheme } from "../hooks/useTheme";
 import { showSuccess, showError } from "../utils/toast";
 import axios from "axios";
 
-const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
+const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api
+';
 
 const NavbarImproved = () => {
   const [menuOpen, setMenuOpen] = useState(false);

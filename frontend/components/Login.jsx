@@ -4,7 +4,8 @@ import { Eye, EyeOff } from "lucide-react";
 import axios from 'axios';
 import { useAuth } from "../context/AuthContext";
 
-const API_BASE_URL = 'https://d2w8d5sgt2ne9t.cloudfront.net/api';
+const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api
+';
 
 const Login = () => {
   const [username, setUsername] = useState("");

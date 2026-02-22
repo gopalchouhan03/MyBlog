@@ -94,5 +94,6 @@ jobs:
           echo "🎉 Frontend deployment successful!"
           echo "================================"
           echo "🌍 Frontend: https://d3hpld8vt7tywq.cloudfront.net"
-          echo "🔗 Backend API: https://d2w8d5sgt2ne9t.cloudfront.net/api"
+          echo "🔗 Backend API: https://myblog-backend-t9rr.onrender.com/api
+"
           echo "================================"
