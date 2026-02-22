@@ -69,10 +69,10 @@ const CardItem = ({ item, index, userId, handleReadMore, handleLike }) => {
         <div className="flex items-center justify-between pt-4 border-t border-gray-100">
           <button
             onClick={() => handleReadMore(item?._id)}
-            className="inline-flex items-center gap-2 text-blue-600 font-semibold text-sm hover:text-blue-700 hover:gap-3 transition-all duration-300 group/btn"
+            className="inline-flex items-center gap-2 text-blue-600 font-semibold text-sm hover:text-blue-700 hover:gap-3 transition-all duration-300"
           >
             Read More
-            <FaArrowRight className="text-xs group-hover/btn:translate-x-1 transition-transform" />
+            <FaArrowRight className="text-xs group-hover:translate-x-1 transition-transform" />
           </button>
           <PostActions item={item} userId={userId} handleLike={handleLike} />
         </div>
