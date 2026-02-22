@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api
-';
+const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api';
 
 const PostPage = () => {
   const { id } = useParams();

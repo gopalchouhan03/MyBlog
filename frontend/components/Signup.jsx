@@ -4,8 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
-const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api
-';
+const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api';
 
 const Signup = () => {
   const [form, setForm] = useState({

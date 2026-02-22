@@ -3,8 +3,7 @@ import axios from 'axios';
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api
-';
+const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api';
 
 const CreatePost = () => {
   const [title, setTitle] = useState('');

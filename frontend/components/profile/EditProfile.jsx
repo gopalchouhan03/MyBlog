@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api
-';
+const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api';
 
 const EditProfile = ({ userId }) => {
   const [form, setForm] = useState({ fullName: "", bio: "", profileImage: "" });

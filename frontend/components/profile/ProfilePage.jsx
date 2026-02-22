@@ -5,8 +5,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
 import { userAPI } from "../../utils/apiClient";
 
-const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api
-';
+const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api';
 
 const ProfilePage = () => {
   const { userId } = useParams(); // profile being viewed

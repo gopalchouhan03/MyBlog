@@ -5,8 +5,7 @@ import CardItem from "./CardItem";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api
-';
+const API_BASE_URL = 'https://myblog-backend-t9rr.onrender.com/api';
 
 const Cards = () => {
   const { post, loader } = useOutletContext();
