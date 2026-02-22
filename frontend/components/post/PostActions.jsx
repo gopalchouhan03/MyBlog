@@ -78,43 +78,46 @@ const PostActions = ({ item, userId, handleLike }) => {
         <div className="bg-white relative">
 
             {/* Action Buttons */}
-            <div className="flex items-center justify-between px-3 sm:px-6 py-3 sm:py-4">
-                {/* Like */}
-                <button
-                    onClick={() => userId ? handleLike(item._id, setLikes, setLiked) : alert("Please login")}
-                    className={` cursor-pointer flex items-center gap-1 sm:gap-2 text-base sm:text-lg transition-transform duration-200 ${liked ? "text-red-500 scale-110" : "text-gray-600 hover:text-red-400"}`}
-                >
-                    <FaHeart />
-                    <span className={`text-sm sm:text-sm font-semibold ${liked ? "text-red-500" : "text-gray-800"}`}>{likes}</span>
-                </button>
-
-                {/* Comment */}
-                <button
-                    onClick={() => setShowComments(!showComments)}
-                    className=" cursor-pointer flex items-center gap-1 sm:gap-2 text-base sm:text-lg text-gray-600 hover:text-blue-500 transition-transform duration-200"
-                >
-                    <FaRegComment />
-                    <span className="text-sm sm:text-sm font-semibold text-gray-800">{commentsCount}</span>
-                </button>
-
-                {/* Share */}
-                {/* Share */}
-                <div className="relative" ref={shareRef}>
+            <div className="flex items-center justify-between px-2 sm:px-3 py-2">
+                <div className="flex items-center gap-3">
+                    {/* Like */}
                     <button
-                        onClick={() => setShowShare(!showShare)}
-                        className=" cursor-pointer flex items-center gap-1 sm:gap-2 text-base sm:text-lg text-gray-600 hover:text-green-500 transition-transform duration-200"
+                        onClick={() => userId ? handleLike(item._id, setLikes, setLiked) : alert("Please login")}
+                        className={`flex items-center gap-1 text-sm transition-transform duration-200 ${liked ? "text-red-500 scale-110" : "text-gray-600 hover:text-red-400"}`}
+                        aria-label="Like"
                     >
-                        <FaShareAlt />
-                        <span className="text-sm sm:text-sm font-semibold text-gray-800">{shares}</span>
-
+                        <FaHeart size={16} />
+                        <span className={`text-sm font-medium ${liked ? "text-red-500" : "text-gray-800"}`}>{likes}</span>
                     </button>
 
-                    {/* Share Platforms Dropdown */}
-                    <div className={`absolute right-0 mt-1 px-2 py-2 bg-white border rounded shadow-lg flex flex-col gap-2 w-32 z-20 transition-all duration-300 overflow-hidden ${showShare ? "max-h-60 opacity-100" : "max-h-0 opacity-0"}`}>
-                        <button className=" cursor-pointer flex items-center gap-2 text-sm hover:text-blue-600" onClick={() => handleShare("facebook")}><FaFacebookF /> Facebook</button>
-                        <button className=" cursor-pointer flex items-center gap-2 text-sm hover:text-blue-400" onClick={() => handleShare("twitter")}><FaTwitter /> X </button>
-                        <button className=" cursor-pointer flex items-center gap-2 text-sm hover:text-green-500" onClick={() => handleShare("whatsapp")}><FaWhatsapp /> WhatsApp</button>
-                        <button className=" cursor-pointer flex items-center gap-2 text-sm hover:text-gray-700" onClick={() => handleShare("copy")}><FaLink /> Copy Link</button>
+                    {/* Comment */}
+                    <button
+                        onClick={() => setShowComments(!showComments)}
+                        className="flex items-center gap-1 text-sm text-gray-600 hover:text-blue-500 transition-transform duration-200"
+                        aria-label="Comments"
+                    >
+                        <FaRegComment size={16} />
+                        <span className="text-sm font-medium text-gray-800">{commentsCount}</span>
+                    </button>
+
+                    {/* Share */}
+                    <div className="relative" ref={shareRef}>
+                        <button
+                            onClick={() => setShowShare(!showShare)}
+                            className="flex items-center gap-1 text-sm text-gray-600 hover:text-green-500 transition-transform duration-200"
+                            aria-label="Share"
+                        >
+                            <FaShareAlt size={16} />
+                            <span className="text-sm font-medium text-gray-800">{shares}</span>
+                        </button>
+
+                        {/* Share Platforms Dropdown */}
+                        <div className={`absolute right-0 mt-1 px-2 py-2 bg-white border rounded shadow-lg flex flex-col gap-2 w-32 z-20 transition-all duration-300 overflow-hidden ${showShare ? "max-h-60 opacity-100" : "max-h-0 opacity-0"}`}>
+                            <button className=" cursor-pointer flex items-center gap-2 text-sm hover:text-blue-600" onClick={() => handleShare("facebook")}><FaFacebookF size={14} /> Facebook</button>
+                            <button className=" cursor-pointer flex items-center gap-2 text-sm hover:text-blue-400" onClick={() => handleShare("twitter")}><FaTwitter size={14} /> X </button>
+                            <button className=" cursor-pointer flex items-center gap-2 text-sm hover:text-green-500" onClick={() => handleShare("whatsapp")}><FaWhatsapp size={14} /> WhatsApp</button>
+                            <button className=" cursor-pointer flex items-center gap-2 text-sm hover:text-gray-700" onClick={() => handleShare("copy")}><FaLink size={14} /> Copy Link</button>
+                        </div>
                     </div>
                 </div>
 
