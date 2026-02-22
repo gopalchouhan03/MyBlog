@@ -48,47 +48,42 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen pt-20 flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Decorative blobs */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-      <div className="absolute top-40 right-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-      <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-
-      <div className="relative z-10 w-full max-w-md px-4">
+    <div className="min-h-screen pt-16 sm:pt-20 flex items-center justify-center bg-gray-50 px-4">
+      <div className="w-full max-w-md">
         {/* Card */}
-        <div className="bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl p-8 sm:p-10 border border-white/20">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 sm:p-8">
           {/* Logo */}
-          <Link to="/" className="flex items-center justify-center gap-2 mb-8">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold">
+          <Link to="/" className="flex items-center justify-center gap-2 mb-6 sm:mb-8">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
               M
             </div>
-            <span className="text-xl font-bold gradient-text">MyBlog</span>
+            <span className="text-lg sm:text-xl font-bold text-gray-900">MyBlog</span>
           </Link>
 
           {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-            <p className="text-gray-300 text-sm">Sign in to access your account</p>
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Sign In</h1>
+            <p className="text-gray-600 text-sm">Welcome back to your account</p>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleLogin} className="space-y-5">
+          <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5">
             {/* Username */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">Username</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">Username</label>
               <input
                 type="text"
                 placeholder="Enter your username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 disabled={isLoading}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/20 text-white placeholder-gray-400 transition-all disabled:opacity-50"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500 transition-all disabled:opacity-50 bg-white text-sm"
               />
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-semibold text-white mb-2">Password</label>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">Password</label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -96,22 +91,22 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={isLoading}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/20 text-white placeholder-gray-400 transition-all disabled:opacity-50"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500 transition-all disabled:opacity-50 bg-white text-sm"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   disabled={isLoading}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-300 hover:text-white transition-colors disabled:opacity-50"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-900 transition-colors disabled:opacity-50"
                 >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
             </div>
 
             {/* Forgot Password */}
             <div className="flex justify-end">
-              <a href="#" className="text-sm text-blue-400 hover:text-blue-300 transition-colors">
+              <a href="#" className="text-sm text-blue-600 hover:text-blue-700 transition-colors">
                 Forgot password?
               </a>
             </div>
@@ -120,33 +115,33 @@ const Login = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full btn-gradient py-3 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full btn-gradient py-2.5 font-semibold disabled:opacity-50 disabled:cursor-not-allowed text-sm"
             >
               {isLoading ? "Signing in..." : "Sign In"}
             </button>
           </form>
 
           {/* Divider */}
-          <div className="relative my-6">
+          <div className="relative my-5 sm:my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/20"></div>
+              <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-gray-400">New to MyBlog?</span>
+              <span className="px-2 bg-white text-gray-600">New to MyBlog?</span>
             </div>
           </div>
 
           {/* Sign Up Link */}
           <Link
             to="/signup"
-            className="block w-full btn-secondary py-3 font-semibold text-center"
+            className="block w-full btn-secondary py-2.5 font-semibold text-center text-sm"
           >
             Create Account
           </Link>
 
           {/* Footer */}
-          <p className="text-center text-xs text-gray-400 mt-6">
-            By signing in, you agree to our <a href="#" className="text-blue-400 hover:underline">Terms</a> and <a href="#" className="text-blue-400 hover:underline">Privacy Policy</a>
+          <p className="text-center text-xs text-gray-500 mt-5 sm:mt-6">
+            By signing in, you agree to our <a href="#" className="text-blue-600 hover:underline">Terms</a> and <a href="#" className="text-blue-600 hover:underline">Privacy Policy</a>
           </p>
         </div>
       </div>

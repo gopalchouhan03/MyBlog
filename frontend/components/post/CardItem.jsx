@@ -21,58 +21,57 @@ const CardItem = ({ item, index, userId, handleReadMore, handleLike }) => {
   };
 
   return (
-    <div className="group card-modern overflow-hidden h-full flex flex-col animate-fadeInUp">
+    <div className="group card-modern overflow-hidden h-full flex flex-col">
       {/* Image Container */}
-      <div className="relative h-48 sm:h-56 overflow-hidden bg-gradient-to-br from-blue-400 to-purple-500">
+      <div className="relative h-40 sm:h-48 overflow-hidden bg-gray-200">
         <img
           src={`https://picsum.photos/500/300?random=${index}`}
           alt="Blog Thumbnail"
-          className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+          className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
       </div>
 
       {/* Content Section */}
-      <div className="p-5 sm:p-6 flex-1 flex flex-col">
+      <div className="p-4 sm:p-5 flex-1 flex flex-col">
         {/* Title */}
-        <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:gradient-text transition-all duration-300">
+        <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-2 line-clamp-2">
           {item?.title || "Untitled Post"}
         </h2>
 
         {/* Description */}
-        <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-1">
+        <p className="text-gray-600 text-xs sm:text-sm mb-3 line-clamp-2 flex-1">
           {item?.desc || "No description available"}
         </p>
 
         {/* Author Info */}
         <Link
           to={`/profile/${item.author}`}
-          className="flex items-center gap-3 mb-4 hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2 mb-3 hover:opacity-80 transition-opacity"
         >
           <img
             src={item.profileImage || `https://randomuser.me/api/portraits/${index % 2 === 0 ? 'men' : 'women'}/${(index % 70) + 1}.jpg`}
             alt={item.author || "Author"}
-            className="w-10 h-10 rounded-full object-cover border-2 border-blue-100 shadow-sm"
+            className="w-8 h-8 rounded-full object-cover border border-gray-300"
           />
-          <div className="flex-1">
-            <p className="font-semibold text-gray-800 text-sm">
+          <div className="flex-1 min-w-0">
+            <p className="font-semibold text-gray-800 text-xs sm:text-sm truncate">
               {item.author || "Anonymous"}
             </p>
             <div className="flex items-center gap-1 text-xs text-gray-500">
-              <FaClock size={11} />
-              {formatDate(item.date)}
+              <FaClock size={10} />
+              <span className="truncate">{formatDate(item.date)}</span>
             </div>
           </div>
         </Link>
 
         {/* Footer: CTA & Actions */}
-        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+        <div className="flex items-center justify-between pt-3 border-t border-gray-200 mt-auto">
           <button
             onClick={() => handleReadMore(item?._id)}
-            className="inline-flex items-center gap-2 text-blue-600 font-semibold text-sm hover:text-blue-700 hover:gap-3 transition-all duration-300"
+            className="inline-flex items-center gap-1.5 text-blue-600 font-semibold text-xs sm:text-sm hover:text-blue-700 transition-colors"
           >
             Read More
-            <FaArrowRight className="text-xs group-hover:translate-x-1 transition-transform" />
+            <FaArrowRight className="text-xs" />
           </button>
           <PostActions item={item} userId={userId} handleLike={handleLike} />
         </div>

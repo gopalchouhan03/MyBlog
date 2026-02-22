@@ -38,15 +38,15 @@ const Cards = () => {
   return (
     <>
       {!loader ? (
-        <div className="min-h-screen pt-20">
+        <div className="min-h-screen pt-16 sm:pt-20 pb-8">
           {/* Header Section */}
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-            <div className="text-center animate-slideInDown">
-              <h1 className="text-4xl sm:text-5xl font-bold gradient-text mb-3">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-12">
+            <div className="text-center">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Discover Stories
               </h1>
-              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-                Explore inspiring articles, insightful perspectives, and engaging content from passionate writers.
+              <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
+                Explore inspiring articles and engaging content from writers around the world.
               </p>
             </div>
           </div>
@@ -54,7 +54,7 @@ const Cards = () => {
           {/* Articles Grid */}
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {post && post.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-12">
                 {post.map((item, index) => (
                   <CardItem
                     key={item?._id || index}
@@ -69,24 +69,21 @@ const Cards = () => {
             ) : (
               <div className="flex flex-col items-center justify-center py-20">
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-gray-700 mb-3">No articles yet</p>
-                  <p className="text-gray-500 text-lg">Be the first to share your story!</p>
+                  <p className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">No articles yet</p>
+                  <p className="text-gray-600 text-base">Be the first to share your story!</p>
                 </div>
               </div>
             )}
           </div>
-
-          {/* Footer Spacing */}
-          <div className="h-12"></div>
         </div>
       ) : (
-        <div className="fixed inset-0 flex items-center justify-center bg-white/50 backdrop-blur-sm">
-          <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-4 relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full opacity-25 blur-xl animate-pulse"></div>
-              <div className="relative w-16 h-16 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin"></div>
+        <div className="fixed inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm">
+          <div className="text-center px-4">
+            <div className="w-14 h-14 mx-auto mb-4 relative">
+              <div className="absolute inset-0 bg-blue-600 rounded-full opacity-20 blur-lg animate-pulse"></div>
+              <div className="relative w-14 h-14 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin"></div>
             </div>
-            <p className="text-gray-600 font-semibold">Loading amazing stories...</p>
+            <p className="text-gray-700 font-medium text-sm">Loading stories...</p>
           </div>
         </div>
       )}

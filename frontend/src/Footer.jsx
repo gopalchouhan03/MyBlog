@@ -5,25 +5,25 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-gradient-to-b from-gray-900 via-gray-900 to-black text-gray-300 pt-16 pb-8 mt-20">
+    <footer className="relative bg-gray-900 text-gray-400 pt-12 sm:pt-16 pb-6 sm:pb-8 mt-12 sm:mt-20">
       {/* Decorative top border */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"></div>
+      <div className="absolute top-0 left-0 right-0 h-1 bg-blue-600"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Newsletter Section */}
-        <div className="mb-16 bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-2xl border border-blue-500/20 p-8 sm:p-10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mb-12 sm:mb-16 bg-gray-800 rounded-lg border border-gray-700 p-6 sm:p-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
             <div>
-              <h3 className="text-2xl font-bold text-white mb-2">Never miss an update</h3>
-              <p className="text-gray-400">Subscribe to get the latest articles delivered to your inbox</p>
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-1">Never miss an update</h3>
+              <p className="text-gray-400 text-sm">Subscribe to get the latest articles</p>
             </div>
-            <div className="flex w-full md:w-auto">
+            <div className="flex w-full md:w-auto gap-2">
               <input
                 type="email"
-                placeholder="Enter your email"
-                className="flex-1 md:flex-0 px-4 py-3 bg-white/10 border border-gray-600 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-500 transition-all"
+                placeholder="Your email"
+                className="flex-1 md:flex-0 px-4 py-2.5 bg-white text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm placeholder-gray-500 transition-all"
               />
-              <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-r-lg hover:from-blue-700 hover:to-purple-700 font-semibold transition-all">
+              <button className="px-4 sm:px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold transition-colors text-sm">
                 Join
               </button>
             </div>
@@ -31,56 +31,56 @@ const Footer = () => {
         </div>
 
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-12">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
                 M
               </div>
-              <span className="text-xl font-bold gradient-text">MyBlog</span>
+              <span className="text-lg font-bold text-white">MyBlog</span>
             </div>
-            <p className="text-gray-400 text-sm mb-6">
-              Empowering writers and readers to share knowledge, stories, and ideas through beautifully designed digital publishing.
+            <p className="text-gray-400 text-xs sm:text-sm mb-4">
+              A platform for sharing stories and ideas with writers and readers worldwide.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-lg bg-gray-800 hover:bg-blue-600 flex items-center justify-center transition-colors">
-                <FaTwitter size={18} />
+            <div className="flex gap-2">
+              <a href="#" className="w-9 h-9 rounded-lg bg-gray-800 hover:bg-blue-600 flex items-center justify-center transition-colors text-sm">
+                <FaTwitter />
               </a>
-              <a href="#" className="w-10 h-10 rounded-lg bg-gray-800 hover:bg-blue-600 flex items-center justify-center transition-colors">
-                <FaFacebookF size={18} />
+              <a href="#" className="w-9 h-9 rounded-lg bg-gray-800 hover:bg-blue-600 flex items-center justify-center transition-colors text-sm">
+                <FaFacebookF />
               </a>
-              <a href="#" className="w-10 h-10 rounded-lg bg-gray-800 hover:bg-blue-600 flex items-center justify-center transition-colors">
-                <FaInstagram size={18} />
+              <a href="#" className="w-9 h-9 rounded-lg bg-gray-800 hover:bg-blue-600 flex items-center justify-center transition-colors text-sm">
+                <FaInstagram />
               </a>
-              <a href="#" className="w-10 h-10 rounded-lg bg-gray-800 hover:bg-blue-600 flex items-center justify-center transition-colors">
-                <FaLinkedinIn size={18} />
+              <a href="#" className="w-9 h-9 rounded-lg bg-gray-800 hover:bg-blue-600 flex items-center justify-center transition-colors text-sm">
+                <FaLinkedinIn />
               </a>
             </div>
           </div>
 
           {/* Product */}
           <div>
-            <h4 className="text-white font-semibold mb-6">Product</h4>
-            <ul className="space-y-3">
+            <h4 className="text-white font-semibold mb-4 text-sm">Product</h4>
+            <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
-                  <FaArrowRight size={12} /> Home
+                <Link to="/" className="text-gray-400 hover:text-white transition-colors">
+                  Home
                 </Link>
               </li>
               <li>
-                <Link to="/createpost" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
-                  <FaArrowRight size={12} /> Write Article
+                <Link to="/createpost" className="text-gray-400 hover:text-white transition-colors">
+                  Write Article
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
-                  <FaArrowRight size={12} /> Featured
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  Featured
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
-                  <FaArrowRight size={12} /> Browse Stories
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  Browse
                 </a>
               </li>
             </ul>
@@ -88,26 +88,26 @@ const Footer = () => {
 
           {/* Company */}
           <div>
-            <h4 className="text-white font-semibold mb-6">Company</h4>
-            <ul className="space-y-3">
+            <h4 className="text-white font-semibold mb-4 text-sm">Company</h4>
+            <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
-                  <FaArrowRight size={12} /> About Us
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  About
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
-                  <FaArrowRight size={12} /> Blog
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  Blog
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
-                  <FaArrowRight size={12} /> Contact
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  Contact
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
-                  <FaArrowRight size={12} /> Careers
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  Careers
                 </a>
               </li>
             </ul>
@@ -115,26 +115,26 @@ const Footer = () => {
 
           {/* Resources */}
           <div>
-            <h4 className="text-white font-semibold mb-6">Resources</h4>
-            <ul className="space-y-3">
+            <h4 className="text-white font-semibold mb-4 text-sm">Resources</h4>
+            <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
-                  <FaArrowRight size={12} /> Help Center
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  Help Center
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
-                  <FaArrowRight size={12} /> Privacy Policy
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  Privacy
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
-                  <FaArrowRight size={12} /> Terms & Conditions
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  Terms
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2">
-                  <FaArrowRight size={12} /> Guidelines
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  Guidelines
                 </a>
               </li>
             </ul>
